@@ -10,7 +10,8 @@ import evaluation as eval
 def main():
 
     ##### Set threshold
-    threshold = 10  # need to variable
+    threshold = 29  # 이 값을 변하는 값으로 하여 성능을 올릴 수 있음
+    print('threshold:', threshold)
 
     ##### Set path
     input_path = './input_image'    # input path
@@ -25,9 +26,21 @@ def main():
     frame_current_gray = cv.cvtColor(frame_current, cv.COLOR_BGR2GRAY).astype(np.float64)
     frame_prev_gray = frame_current_gray
 
-
+    ##### make default background
+    background_sum_img = np.zeros(frame_current_gray.shape, dtype=np.float64)
+    
     ##### background substraction
     for image_idx in range(len(input_img)):
+
+        ##### print current image index
+        if image_idx%170 == 0:
+            print('Processing %d%%' % (image_idx//17))
+
+        ##### 470개의 이미지에 대해서 단순한 중첩을 통해 배경을 만들어내는 방법
+        if image_idx < 470:
+            background_sum_img += frame_current_gray
+            if image_idx == 469:
+                background_img = background_sum_img / 470
 
         ##### calculate foreground region
         diff = frame_current_gray - frame_prev_gray
