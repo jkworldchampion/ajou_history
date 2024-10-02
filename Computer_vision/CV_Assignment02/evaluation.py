@@ -39,19 +39,25 @@ def cal_result(datapath, resultpath):
 
         ##### variable summation
         TP += np.sum(np.logical_and(gt_cvt, result_gray).astype(np.uint8))
-        TN += np.sum(np.logical_and(gt_cvt_rev, result_gray).astype(np.uint8))
         FP += np.sum(np.logical_and(gt_cvt_rev, result_gray).astype(np.uint8))
         FN += np.sum(np.logical_and(gt_cvt, result_gray).astype(np.uint8))
         GT += np.sum(gt_cvt) // 255
-        EST += np.sum(result_gray) // 255
         
 
     print('TP : %d  ||  GT : %d ||  EST : %d' % (TP, GT, TP + FP))
     print('Recall : %.3f %%  ||  Precision : %.3f %%' %
           (((100.0 * TP) / GT), ((100.0 * TP) / (TP + FP))))
-    print('F1 Score : %.3f %%' % (2 * (100.0 * TP) / (2 * TP + FP + FN)))
-    print('F1 Score : %.3f %%' % (200.0 * TP / (2 * TP + FP + GT)))
+    
 
+    print('F1 Score : %.3f %%' % (2 * (100.0 * TP) / (2 * TP + FP + FN)))
+
+    ##### Recall, Precision, F1 Score 계산
+    recall = (100.0 * TP) / GT
+    precision = (100.0 * TP) / (TP + FP)
+    f1_score = (2 * (100.0 * TP) / (2 * TP + FP + FN))
+
+    # 계산된 값을 반환
+    return recall, precision, f1_score
 
 if __name__ == '__main__':
     cal_result('./groundtruth', './result')

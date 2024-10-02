@@ -7,11 +7,11 @@ import evaluation as eval
 ##### This code has been tested in Python 3.6 environment #####
 ###############################################################
 
-def main():
+def main(default=19, corner=60):
 
     ##### Set threshold
-    threshold_corner = 60  # 왼쪽 위 1/4 부분의 높은 threshold 설정
-    threshold_default = 19  # 나머지 부분의 기본 threshold 설정
+    threshold_corner = corner  # 왼쪽 위 1/4 부분의 높은 threshold 설정
+    threshold_default = default  # 나머지 부분의 기본 threshold 설정
     print('threshold_corner:', threshold_corner)
     print('threshold_default:', threshold_default)
 
@@ -36,8 +36,8 @@ def main():
     for image_idx in range(len(input_img)):
 
         ##### print current image index
-        if image_idx % 170 == 0:
-            print('Processing %d%%' % (image_idx // 17))
+        # if image_idx % 340 == 0:
+        #     print('Processing %d%%' % (image_idx // 17))
 
         ##### 배경을 만들기 위해 470개의 프레임을 쌓음
         if image_idx < 470:
@@ -48,7 +48,7 @@ def main():
 
                 ##### 중위값으로 만들어진 background_img를 저장
                 cv.imwrite(background_save_path, background_img.astype(np.uint8))
-                print(f'Background image saved at {background_save_path}')
+                #print(f'Background image saved at {background_save_path}')
 
         ##### If background_img is initialized, calculate the difference
         if background_img is not None:
@@ -111,4 +111,6 @@ def main():
     eval.cal_result(gt_path, result_path)
 
 if __name__ == '__main__':
-    main()
+    #### main(default, corner)
+    main(45, 84)
+    main(50, 84)
