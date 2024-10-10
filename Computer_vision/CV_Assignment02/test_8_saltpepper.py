@@ -35,9 +35,9 @@ def main(default=19, corner=60):
     ##### background subtraction loop
     for image_idx in range(len(input_img)):
 
-        ##### print current image index
-        # if image_idx % 340 == 0:
-        #     print('Processing %d%%' % (image_idx // 17))
+        #### print current image index
+        if image_idx % 340 == 0:
+            print('Processing %d%%' % (image_idx // 17))
 
         ##### 배경을 만들기 위해 470개의 프레임을 쌓음
         if image_idx < 470:
@@ -112,5 +112,4 @@ def main(default=19, corner=60):
 
 if __name__ == '__main__':
     #### main(default, corner)
-    main(45, 84)
-    main(50, 84)
+    main(19, 40)
