@@ -1,5 +1,5 @@
-threshold_corner: 84
-threshold_default: 35
-F1 Score: 66.58996785101044
-Recall: 78.2941116224309
-Precision: 99.65564767201874
+threshold_corner: 40
+threshold_default: 19
+F1 Score: 93.88323537869273
+Recall: 92.09027354214162
+Precision: 95.74740004701384

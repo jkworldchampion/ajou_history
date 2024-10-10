@@ -20,6 +20,31 @@ def apply_vertical_filter(image):
 
     return image
 
+def custom_median_filter(image, kernel_size=3):
+    """
+    커스텀 중위값 필터
+    """
+    # 이미지의 높이와 너비를 가져옵니다.
+    height, width = image.shape
+    
+    # 중위값 필터링된 이미지를 저장할 배열을 생성
+    result = np.zeros_like(image)
+    
+    # 커널의 반지름을 계산
+    kernel_radius = kernel_size // 2
+    
+    # 이미지의 모든 픽셀을 순회
+    for y in range(height):
+        for x in range(width):
+            # 커널의 크기만큼 픽셀을 가져옵니다.
+            kernel = image[max(0, y - kernel_radius):min(height, y + kernel_radius + 1),
+                           max(0, x - kernel_radius):min(width, x + kernel_radius + 1)]
+            
+            # 커널의 중위값을 계산하여 결과 이미지에 저장
+            result[y, x] = np.median(kernel)
+    
+    return result
+
 def main(default=19, corner=60):
 
     ##### Set threshold
@@ -48,6 +73,9 @@ def main(default=19, corner=60):
 
     ##### background subtraction loop
     for image_idx in range(len(input_img)):
+        
+        if image_idx % 340 == 0:
+            print('Processing %d%%' % (image_idx // 17))
 
         ##### 배경을 만들기 위해 470개의 프레임을 쌓음
         if image_idx < 470:
@@ -101,7 +129,7 @@ def main(default=19, corner=60):
             current_gray_masked_mk2 = np.where(current_gray_masked > 0, 255.0, 0.0)
 
             ##### Apply median filter to remove salt and pepper noise
-            result = cv.medianBlur(current_gray_masked_mk2.astype(np.uint8), 3)  # 3x3 커널 사용
+            result = custom_median_filter(current_gray_masked_mk2.astype(np.uint8), 3)  # 3x3 커널 사용
 
             ##### Apply the vertical filter
             result = apply_vertical_filter(result)
@@ -149,5 +177,4 @@ def main(default=19, corner=60):
 
 if __name__ == '__main__':
     #### main(default, corner)
-    main(35, 84)
-    main(20, 60)
+    main(19, 40)

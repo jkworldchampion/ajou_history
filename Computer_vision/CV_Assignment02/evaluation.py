@@ -49,12 +49,12 @@ def cal_result(datapath, resultpath):
           (((100.0 * TP) / GT), ((100.0 * TP) / (TP + FP))))
     
 
-    print('F1 Score : %.3f %%' % (2 * (100.0 * TP) / (2 * TP + FP + FN)))
+    print('F1 Score : %.3f %%' % (2 * (100.0 * TP) / (TP + FP + GT)))
 
     ##### Recall, Precision, F1 Score 계산
     recall = (100.0 * TP) / GT
     precision = (100.0 * TP) / (TP + FP)
-    f1_score = (2 * (100.0 * TP) / (2 * TP + FP + FN))
+    f1_score = (2 * (100.0 * TP) / (TP + FP + GT))
 
     # 계산된 값을 반환
     return recall, precision, f1_score
